@@ -10,7 +10,26 @@
 </head>
 
 <body>
+    <h2>Books:</h2>
+    <ul class="library"></ul>
 
+    <form id="bookForm">
+        <label for="title">Title: </label>
+        <input type="text" id="title" required>
+
+        <label for="author">Author: </label>
+        <input type="text" id="author" required>
+
+        <label for="pages">Pages: </label>
+        <input type="number" id="pages" required>
+
+        <label for="read">Read: </label>
+        <input type="checkbox" id="read">
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
