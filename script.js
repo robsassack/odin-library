@@ -21,20 +21,45 @@ function printLibrary() {
     display.textContent = '';
     for (let i=0; i < myLibrary.length; i++) {
         let newBook = document.createElement('li');
+
+        // text formatting for book information
+        let textFormat = `${myLibrary[i].title} by ${myLibrary[i].author}, ${myLibrary[i].pages} pages`;
+
+        // creation of current read status
+        let readCheckbox = document.createElement('div');
+        readCheckbox.classList.add('read-status');
+        readCheckbox.classList.add('read-false');
+        readCheckbox.innerText = 'false';
+        if (myLibrary[i].read) {
+            readCheckbox.classList.remove('read-false');
+            readCheckbox.classList.add('read-true');
+            readCheckbox.innerText = 'true';
+        }
+
+        // creation of delete button
         let delButton = document.createElement('button');
         delButton.innerText = "Delete";
         delButton.className = "deleteBook";
 
-        let readStatus = "has not been read";
-
-        if (myLibrary[i].read) {
-            readStatus = "has been read";
-        }
-        let textFormat = `${myLibrary[i].title} by ${myLibrary[i].author}, ${myLibrary[i].pages} pages, ${readStatus}`;
-
+        // appends current book to the list of books
         newBook.appendChild(document.createTextNode(textFormat));
+        newBook.appendChild(readCheckbox);
         newBook.appendChild(delButton);
         display.appendChild(newBook);
+
+        // event listener to toggle read status
+        readCheckbox.addEventListener('click', (e) => {
+            if (toggleReadStatus(myLibrary[i])) {
+                readCheckbox.classList.add('read-true');
+                readCheckbox.classList.remove('read-false');
+                readCheckbox.innerText = 'true';
+            } else {
+                readCheckbox.classList.add('read-false');
+                readCheckbox.classList.remove('read-true');
+                readCheckbox.innerText = 'false';
+            }
+            printLibrary();
+        });
 
         // event listener to delete book from library
         delButton.addEventListener('click', (e) => {
@@ -42,6 +67,11 @@ function printLibrary() {
             printLibrary();
         });
     }
+}
+
+function toggleReadStatus(toggleBook) {
+    toggleBook.read = !toggleBook.read;
+    return toggleBook.read;
 }
 
 // button listener to create a new book
