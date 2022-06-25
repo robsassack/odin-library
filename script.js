@@ -23,28 +23,40 @@ function printLibrary() {
         let newBook = document.createElement('li');
 
         // text formatting for book information
-        let textFormat = `${myLibrary[i].title} by ${myLibrary[i].author}, ${myLibrary[i].pages} pages`;
+        let titleText = document.createElement('p');
+        let authorText = document.createElement('p');
+        let pagesText = document.createElement('p');
+        let bookText = document.createElement('div');
+        titleText.innerText = myLibrary[i].title;
+        authorText.innerText = myLibrary[i].author;
+        pagesText.innerText = myLibrary[i].pages + " pages";
+        bookText.appendChild(titleText);
+        bookText.appendChild(authorText);
+        bookText.appendChild(pagesText);
 
         // creation of current read status
+        let bookButtons = document.createElement('div');
+        bookButtons.classList.add('book-buttons');
         let readCheckbox = document.createElement('div');
         readCheckbox.classList.add('read-status');
         readCheckbox.classList.add('read-false');
-        readCheckbox.innerText = 'false';
+        readCheckbox.innerText = 'Read ☒';
         if (myLibrary[i].read) {
             readCheckbox.classList.remove('read-false');
             readCheckbox.classList.add('read-true');
-            readCheckbox.innerText = 'true';
+            readCheckbox.innerText = 'Read ☑';
         }
+        bookButtons.appendChild(readCheckbox);
 
         // creation of delete button
         let delButton = document.createElement('button');
         delButton.innerText = "Delete";
         delButton.className = "deleteBook";
+        bookButtons.appendChild(delButton);
 
         // appends current book to the list of books
-        newBook.appendChild(document.createTextNode(textFormat));
-        newBook.appendChild(readCheckbox);
-        newBook.appendChild(delButton);
+        newBook.appendChild(bookText);
+        newBook.appendChild(bookButtons);
         display.appendChild(newBook);
 
         // event listener to toggle read status
@@ -52,11 +64,11 @@ function printLibrary() {
             if (toggleReadStatus(myLibrary[i])) {
                 readCheckbox.classList.add('read-true');
                 readCheckbox.classList.remove('read-false');
-                readCheckbox.innerText = 'true';
+                readCheckbox.innerText = 'Read ☑';
             } else {
                 readCheckbox.classList.add('read-false');
                 readCheckbox.classList.remove('read-true');
-                readCheckbox.innerText = 'false';
+                readCheckbox.innerText = 'Read ☒';
             }
             printLibrary();
         });
